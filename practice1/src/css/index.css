@@ -1,6 +1,7 @@
 .box0{
   width: 100px;
-  background: 100px;
+  height: 100px;
   background-color: red;
   background-image: url('../imgs/img0.gif');
+  background-size: cover;
 }

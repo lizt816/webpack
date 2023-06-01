@@ -19,6 +19,8 @@
   "homepage": "https://github.com/lizt816/webpack#readme",
   "devDependencies": {
     "css-loader": "^6.8.1",
+    "eslint": "^8.41.0",
+    "eslint-webpack-plugin": "^4.0.1",
     "less": "^4.1.3",
     "less-loader": "^11.1.1",
     "sass": "^1.62.1",
