@@ -4,10 +4,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 
 module.exports = {
-    entry: path.resolve(__dirname,'./src/main.js'),    // 入口文件
+    entry: path.resolve(__dirname,'../src/main.js'),    // 入口文件
     output: {                     // 输出
        filename: 'js/main.js',      // 打包后的文件名称
-       path: path.resolve(__dirname,'dist'),  // 打包后的目录
+       path: undefined,  // 开发模式下可以不用定义，打包后的目录
        clean: true,     //   在webpack4的时候，需要插件才行，webpack5只需要配置这个就行了
     },
     module:{                     // 加载器
@@ -76,13 +76,14 @@ module.exports = {
     },
     plugins:[    // 插件
      new ESLintPlugin({
-      context:path.resolve(__dirname,"src")  //  那个地方需要检查
+      context:path.resolve(__dirname,"../src")  //  那个地方需要检查
      }),
      new HtmlWebpackPlugin({
       // 打包后的文件结构和原来的一致，还会自动引入打包输出的资源
-      template:path.resolve(__dirname,"public/index.html")  //  已这个文件目录下的html文件为模板
+      template:path.resolve(__dirname,"../public/index.html")  //  已这个文件目录下的html文件为模板
      })
    ],       
+   // 开发模式下开启devServer后不会生成dist打包后的文件，在内存中编译打包
    devServer:{
      host:"localhost",      // 启动服务器域名
       port:"3000",          // 开启服务器端口号
