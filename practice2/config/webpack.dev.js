@@ -3,7 +3,6 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const os = require("os")
 const threads = os.cpus().length  // cpu核数
-const TerserWebpackPlugin = require("terser-webpack-plugin")
 
 module.exports = {
     entry: path.resolve(__dirname,'../src/main.js'),    // 入口文件
