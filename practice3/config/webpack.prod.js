@@ -6,6 +6,7 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const os = require("os")
 const threads = os.cpus().length  // cpu核数
 const TerserWebpackPlugin = require("terser-webpack-plugin")
+const PreloadWebpackPlugin = require("@vue/preload-webpack-plugin")
 
 function getStyleLoader(pre){
    return [              // 这个是从后往前执行
@@ -28,8 +29,9 @@ function getStyleLoader(pre){
 module.exports = {
     entry: path.resolve(__dirname,'../src/main.js'),    // 入口文件
     output: {                     // 输出
-       filename: 'static/js/main.js',      // 打包后的文件名称
-       chunkFilename:'static/js/[name].js',
+       filename: 'static/js/[name].js',      // 打包后的文件名称，使用[name] 实现更多的兼容
+       chunkFilename:'static/js/[name].chunk.js',    // 这是动态引入打包的文件名字
+       assetModuleFilename:"static/media/[hash:10][ext][query]",  // 图片字体通过type：asset处理资源命名方式
        path: path.resolve(__dirname,'../dist'),  // 打包后的目录
        clean: true,     //   清除上次打包的dist，在webpack4的时候，需要插件才行，webpack5只需要配置这个就行了
     },
@@ -61,18 +63,20 @@ module.exports = {
                 maxSize:10 * 1024         // 条件为10kb的图片就进行base64转行
                }
               },
-              generator:{     // 输出文件的路径
-               //存放的路径，static/images/，然后hash就是唯一值加冒号：10就是代表前10位，防止图片名字冲突，因为都会放在同级，ext:后缀名，query携带
-               filename:"static/images/[hash:10][ext][query]",  
-              }
+              // 下面这个generator注释是因为上面assetModuleFilename处理了命名，不过我感觉这里命名也还行
+              // generator:{     // 输出文件的路径
+              //  //存放的路径，static/images/，然后hash就是唯一值加冒号：10就是代表前10位，防止图片名字冲突，因为都会放在同级，ext:后缀名，query携带
+              //  filename:"static/images/[hash:10][ext][query]",  
+              // }
              },
              {
               test:/\.(ttf|woff2?|map3|map4|avi)$/,     // ttf|woff或者woff2结尾的文件才会执行下面的use
               type:"asset/resource",      // asset会转base64，加asset/resource则只会对文件原封不动的输出
-              generator:{                // 输出文件的路径
-               //存放的路径，static/media/，然后hash就是唯一值加冒号：10就是代表前10位，防止图片名字冲突，因为都会放在同级，ext:后缀名，query携带
-               filename:"static/media/[hash:10][ext][query]",  
-              }
+              // 下面这个generator注释是因为上面assetModuleFilename处理了命名，不过我感觉这里命名也还行
+              // generator:{                // 输出文件的路径
+              //  //存放的路径，static/media/，然后hash就是唯一值加冒号：10就是代表前10位，防止图片名字冲突，因为都会放在同级，ext:后缀名，query携带
+              //  filename:"static/media/[hash:10][ext][query]",  
+              // }
              },
              {
               test: /\.js$/,    // 处理js文件
@@ -110,12 +114,23 @@ module.exports = {
       template:path.resolve(__dirname,"../public/index.html")  //  已这个文件目录下的html文件为模板
      }),
      new MiniCssExtractPlugin({
-      filename:'static/css/main.css'
+      filename:'static/css/[name].css',             // 
+      chunkFilename:"static/css/[name].chunk.css",  // 这个是为了防止以后动态引入打包文件的命名规范，加chunk和主文件区分
      }),
      // new CssMinimizerPlugin(),   // 压缩css
      // new TerserWebpackPlugin({    // 压缩js
      //  parallel:threads,      // 开启多线程和设置进程数量
-     // })
+     // }),
+     // preload的处理方式
+     // new PreloadWebpackPlugin({
+     //  rel:'preload',
+     //  as:'script'
+     // }),
+     // Prefetch的处理方式
+     new PreloadWebpackPlugin({
+      rel:'prefetch'
+     }),
+     
    ],    
    optimization:{
     minimizer:[   // 放置压缩的操作

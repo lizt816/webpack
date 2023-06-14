@@ -7,7 +7,9 @@ const threads = os.cpus().length  // cpu核数
 module.exports = {
     entry: path.resolve(__dirname,'../src/main.js'),    // 入口文件
     output: {                     // 输出
-       filename: 'js/main.js',      // 打包后的文件名称
+       filename: 'static/js/[name].js',      // 打包后的文件名称，使用[name] 实现更多的兼容
+       chunkFilename:'static/js/[name].chunk.js',    // 这是动态引入打包的文件名字
+       assetModuleFilename:"static/media/[hash:10][ext][query]",  // 图片字体通过type：asset处理资源命名方式
        path: undefined,  // 开发模式下可以不用定义，打包后的目录
        clean: true,     //   在webpack4的时候，需要插件才行，webpack5只需要配置这个就行了
     },
@@ -54,18 +56,18 @@ module.exports = {
                maxSize:10 * 1024         // 条件为10kb的图片就进行base64转行
               }
              },
-             generator:{     // 输出文件的路径
-              //存放的路径，static/images/，然后hash就是唯一值加冒号：10就是代表前10位，防止图片名字冲突，因为都会放在同级，ext:后缀名，query携带
-              filename:"static/images/[hash:10][ext][query]",  
-             }
+             // generator:{     // 输出文件的路径
+             //  //存放的路径，static/images/，然后hash就是唯一值加冒号：10就是代表前10位，防止图片名字冲突，因为都会放在同级，ext:后缀名，query携带
+             //  filename:"static/images/[hash:10][ext][query]",  
+             // }
             },
             {
              test:/\.(ttf|woff2?|map3|map4|avi)$/,     // ttf|woff或者woff2结尾的文件才会执行下面的use
              type:"asset/resource",      // asset会转base64，加asset/resource则只会对文件原封不动的输出
-             generator:{                // 输出文件的路径
-              //存放的路径，static/media/，然后hash就是唯一值加冒号：10就是代表前10位，防止图片名字冲突，因为都会放在同级，ext:后缀名，query携带
-              filename:"static/media/[hash:10][ext][query]",  
-             }
+             // generator:{                // 输出文件的路径
+             //  //存放的路径，static/media/，然后hash就是唯一值加冒号：10就是代表前10位，防止图片名字冲突，因为都会放在同级，ext:后缀名，query携带
+             //  filename:"static/media/[hash:10][ext][query]",  
+             // }
             },
             {
              test: /\.js$/,    // 处理js文件

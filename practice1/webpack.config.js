@@ -52,16 +52,16 @@ module.exports = {
            }
           },
           generator:{     // 输出文件的路径
-           //存放的路径，statuc/images/，然后hash就是唯一值加冒号：10就是代表前10位，防止图片名字冲突，因为都会放在同级，ext:后缀名，query携带
-           filename:"statuc/images/[hash:10][ext][query]",  
+           //存放的路径，static/images/，然后hash就是唯一值加冒号：10就是代表前10位，防止图片名字冲突，因为都会放在同级，ext:后缀名，query携带
+           filename:"static/images/[hash:10][ext][query]",  
           }
          },
          {
           test:/\.(ttf|woff2?|map3|map4|avi)$/,     // ttf|woff或者woff2结尾的文件才会执行下面的use
           type:"asset/resource",      // asset会转base64，加asset/resource则只会对文件原封不动的输出
           generator:{                // 输出文件的路径
-           //存放的路径，statuc/media/，然后hash就是唯一值加冒号：10就是代表前10位，防止图片名字冲突，因为都会放在同级，ext:后缀名，query携带
-           filename:"statuc/media/[hash:10][ext][query]",  
+           //存放的路径，static/media/，然后hash就是唯一值加冒号：10就是代表前10位，防止图片名字冲突，因为都会放在同级，ext:后缀名，query携带
+           filename:"static/media/[hash:10][ext][query]",  
           }
          },
          {
