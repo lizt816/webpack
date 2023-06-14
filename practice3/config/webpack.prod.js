@@ -114,8 +114,8 @@ module.exports = {
       template:path.resolve(__dirname,"../public/index.html")  //  已这个文件目录下的html文件为模板
      }),
      new MiniCssExtractPlugin({
-      filename:'static/css/[name].css',             // 
-      chunkFilename:"static/css/[name].chunk.css",  // 这个是为了防止以后动态引入打包文件的命名规范，加chunk和主文件区分
+      filename:'static/css/[name].[contenthash:10].css',             // 
+      chunkFilename:"static/css/[name].chunk.[contenthash:10].css",  // 这个是为了防止以后动态引入打包文件的命名规范，加chunk和主文件区分
      }),
      // new CssMinimizerPlugin(),   // 压缩css
      // new TerserWebpackPlugin({    // 压缩js
@@ -141,6 +141,9 @@ module.exports = {
     ],
     splitChunks:{
      chunks:"all",   //  就会执行所谓的代码分割操作，其他的用默认值就行
+    },
+    runtimeChunk:{
+     name:(entrypoint) => `runtime~${entrypoint.name}.js`
     }
    },   
    mode:'production', // 生产模式
