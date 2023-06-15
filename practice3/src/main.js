@@ -1,5 +1,6 @@
 import count from "./js/count";
 import sum from "./js/sum";
+// import "core-js";
 import "./js/iconfont";
 import "./css/index.css";
 import "./fonts/iconfont.css";
@@ -25,3 +26,19 @@ if(module.hot){
   module.hot.accept("./js/count")
   module.hot.accept("./js/sum")
 }
+
+
+
+
+new Promise((resolve,reject)=>{
+ resolve('new Promise')
+ setTimeout(()=>{
+  console.log('答应------')
+ },2000)
+}).then(res=>{
+  console.log(res,"///")
+})
+
+// let a = [0,1,2,3,4,5]
+
+// a.includes(1)
