@@ -1,6 +1,7 @@
 import count from "./js/count";
 import sum from "./js/sum";
-// import "core-js";
+// import "core-js";+
+// import 'core-js/features/promise';
 import "./js/iconfont";
 import "./css/index.css";
 import "./fonts/iconfont.css";
