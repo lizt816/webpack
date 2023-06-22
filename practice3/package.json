@@ -51,8 +51,5 @@
     "last 2 version",
     "> 1%",
     "not dead"
-  ],
-  "dependencies": {
-    "core-js": "^3.31.0"
-  }
+  ]
 }

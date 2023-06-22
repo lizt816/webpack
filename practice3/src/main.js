@@ -1,6 +1,7 @@
 import count from "./js/count";
 import sum from "./js/sum";
-// import "core-js";+
+// import "core-js";
+// import coreJs from 'core-js';
 // import 'core-js/features/promise';
 import "./js/iconfont";
 import "./css/index.css";
@@ -12,7 +13,7 @@ import "./stylus/index.styl";
 
 console.log(count(2,1));
 console.log(sum(1,2,3));
-
+console.log('coreJscoreJscoreJs');
 
 document.getElementById('btn').onclick = function(){
  // /* webpackChunkName:"math" */  webpack魔法命名
