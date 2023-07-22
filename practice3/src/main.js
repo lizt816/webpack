@@ -22,7 +22,6 @@ document.getElementById('btn').onclick = function(){
  })
 }
 
-
 if(module.hot){
  // 判断是否支持热模块功能
   module.hot.accept("./js/count")
@@ -44,3 +43,14 @@ new Promise((resolve,reject)=>{
 // let a = [0,1,2,3,4,5]
 
 // a.includes(1)
+
+
+if ('serviceWorker' in navigator) {
+ window.addEventListener('load', () => {
+   navigator.serviceWorker.register('/service-worker.js').then(registration => {
+     console.log('SW registered: ', registration);
+   }).catch(registrationError => {
+     console.log('SW registration failed: ', registrationError);
+   });
+ });
+}

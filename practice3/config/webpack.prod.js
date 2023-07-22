@@ -8,6 +8,9 @@ const threads = os.cpus().length  // cpu核数
 const TerserWebpackPlugin = require("terser-webpack-plugin")
 const PreloadWebpackPlugin = require("@vue/preload-webpack-plugin")
 
+const WorkboxPlugin = require('workbox-webpack-plugin');
+
+
 function getStyleLoader(pre){
    return [              // 这个是从后往前执行
     MiniCssExtractPlugin.loader,    //  将js的css通过插件style标签添加到html中
@@ -112,6 +115,12 @@ module.exports = {
      new HtmlWebpackPlugin({
       // 打包后的文件结构和原来的一致，还会自动引入打包输出的资源
       template:path.resolve(__dirname,"../public/index.html")  //  已这个文件目录下的html文件为模板
+     }),
+     new WorkboxPlugin.GenerateSW({
+       // 这些选项帮助快速启用 ServiceWorkers
+       // 不允许遗留任何“旧的” ServiceWorkers
+       clientsClaim: true,
+       skipWaiting: true,
      }),
      new MiniCssExtractPlugin({
       filename:'static/css/[name].[contenthash:10].css',             // 
